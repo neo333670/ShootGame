@@ -10,17 +10,13 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject m_Enemy;
 
     [SerializeField] GameObject wall;
-    GameObject LefttCorner;
-    GameObject RightCorner;
 
     // Start is called before the first frame update
     void Start()
     {
         m_canvas = GameObject.Find("Canvas").gameObject;
-        player = GameObject.Find("Character").GetComponent<CharecterControl>();
-        LefttCorner = wall.transform.Find("LeftCorner").gameObject;
-        RightCorner = wall.transform.Find("RightCorner").gameObject;
-        EnemySpawn();
+        player = GameObject.Find("PlayerDuck").GetComponent<CharecterControl>();
+        
     }
 
     // Update is called once per frame
@@ -32,6 +28,7 @@ public class GameManager : MonoBehaviour
     public void StartGame() {
         m_canvas.SetActive(false);
         player.isStart = true;
+        EnemySpawn();
     }
 
     void EnemySpawn() {

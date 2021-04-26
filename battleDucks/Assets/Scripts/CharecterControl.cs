@@ -60,8 +60,6 @@ public class CharecterControl : MonoBehaviour
 
         this.transform.Rotate(Vector3.up * mouseX);
         this.transform.Rotate(Vector3.left * mouseY);
-
-        Debug.Log($"{mouseX},   {mouseY}");
     }
 
     void Shoot() {

@@ -8,27 +8,46 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField]
     GameObject m_Bullet;
 
+    RaycastHit hit;
+    Vector3 detectDirection;
+
+    public float sightDistance;
+    public int oneTrurnSecond = 5;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        detectDirection = new Vector3();
+        sightDistance = 10f;
+        Debug.Log(transform.localEulerAngles);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        this.transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, Vector3.up * 90, Time.deltaTime);
+        if (Input.GetKeyDown(KeyCode.T)) {
+            SeeArownd();
+        }
+        Detect();
     }
 
-    void Detect(Vector3 L_cornerPos, Vector3 R_cornerPos, GameObject player)
+    void Detect()
     {
-        Vector3 L_Sight = L_cornerPos - this.transform.position;
-        Vector3 R_Sight = R_cornerPos - this.transform.position;
-        Vector3 toPlayer = player.transform.position - this.transform.position;
+        detectDirection = this.transform.forward;
+        Physics.Raycast(this.transform.position, detectDirection, out hit, sightDistance);
+        /**
+        if (hit.transform.gameObject.tag == "Player") {
+            Debug.Log("HIto");
+            Shoot();
+        }**/
 
-        float L_slope = L_Sight.z / L_Sight.x;
-        float R_slope = R_Sight.z / R_Sight.x;
-        float toPlayer_slope = toPlayer.z / toPlayer.x;        
+        Debug.DrawRay(this.transform.position, detectDirection * sightDistance, Color.red);
+    }
+
+    void SeeArownd() {
+            this.transform.localEulerAngles = Vector3.Lerp(transform.localEulerAngles, Vector3.up * 90, 3);
+            this.transform.localEulerAngles = Vector3.Lerp(Vector3.up * 90, -Vector3.up * 180, 6);
     }
 
     void Shoot()
